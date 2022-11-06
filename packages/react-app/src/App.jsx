@@ -42,7 +42,7 @@ const { BufferList } = require("bl");
 // https://www.npmjs.com/package/ipfs-http-client
 const ipfsAPI = require("ipfs-http-client");
 
-const ipfs = ipfsAPI({ host: "ipfs.infura.io", port: "5001", protocol: "https" });
+const ipfs = ipfsAPI.create({ host: "ipfs.infura.io", port: "5001", protocol: "https" });
 
 console.log("📦 Assets: ", assets);
 /*

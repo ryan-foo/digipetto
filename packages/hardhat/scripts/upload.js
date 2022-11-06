@@ -4,9 +4,18 @@ const chalk = require("chalk");
 const { config, ethers } = require("hardhat");
 const { utils } = require("ethers");
 const R = require("ramda");
-const ipfsAPI = require('ipfs-http-client');
-const ipfs = ipfsAPI({host: 'ipfs.infura.io', port: '5001', protocol: 'https' })
-const DELAY = 5000;
+const ipfsClient = require('ipfs-http-client');
+const projectId = process.env.MAINNET_INFURA_KEY;
+const projectSecret = process.env.MAINNET_INFURA_SECRET;
+const auth = 'Basic ' + Buffer.from(projectId + ":" + projectSecret).toString("base64");
+const ipfs = ipfsClient.create({
+    host: "ipfs.infura.io",
+    port: 5001,
+    protocol: "https",
+    headers: {
+        authorization: auth,
+    },
+});const DELAY = 5000;
 
 function timeout(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));

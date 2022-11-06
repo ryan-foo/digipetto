@@ -116,6 +116,12 @@ module.exports = {
         mnemonic: mnemonic(),
       },
     },
+    mumbai: {
+      url: "https://mumbai.infura.io/v3/2H8srZxWfkMMImGx3mQlrlhQ9LJ",
+      accounts: {
+        mnemonic: mnemonic()
+      }
+    },
     ropsten: {
       url: "https://ropsten.infura.io/v3/460f40a260564ac4a4f4b3fffb032dad", // <---- YOUR INFURA ID! (or it won't work)
 
