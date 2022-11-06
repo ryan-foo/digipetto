@@ -68,7 +68,8 @@
     ]
   },
   "dependencies": {
+    "@chainlink/contracts": "^0.5.1",
     "buffer": "^6.0.3",
-    "ipfs-http-client": "^50.1.2"
+    "ipfs-http-client": "50.1.2"
   }
 }
