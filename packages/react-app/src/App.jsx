@@ -309,11 +309,14 @@ function App(props) {
       const collectibleUpdate = [];
       for (let tokenIndex = 0; tokenIndex < balance; tokenIndex++) {
         try {
-          console.log("GEtting token index", tokenIndex);
+          console.log("Getting token index", tokenIndex);
           const tokenId = await readContracts.YourCollectible.tokenOfOwnerByIndex(address, tokenIndex);
           console.log("tokenId", tokenId);
           const tokenURI = await readContracts.YourCollectible.tokenURI(tokenId);
           console.log("tokenURI", tokenURI);
+
+          const strength = await readContracts.YourCollectible.tokenStrength(utils.id(tokenURI.replace("https://ipfs.io/ipfs/","")))
+          const lifespan = await readContracts.YourCollectible.lifespan(utils.id(tokenURI.replace("https://ipfs.io/ipfs/","")))
 
           const ipfsHash = tokenURI.replace("https://ipfs.io/ipfs/", "");
           console.log("ipfsHash", ipfsHash);
@@ -323,7 +326,7 @@ function App(props) {
           try {
             const jsonManifest = JSON.parse(jsonManifestBuffer.toString());
             console.log("jsonManifest", jsonManifest);
-            collectibleUpdate.push({ id: tokenId, uri: tokenURI, owner: address, ...jsonManifest });
+            collectibleUpdate.push({ id: tokenId, uri: tokenURI, owner: address, ...jsonManifest, strength: strength, lifespan: lifespan });
           } catch (e) {
             console.log(e);
           }
@@ -546,11 +549,15 @@ function App(props) {
         try {
           const forSale = await readContracts.YourCollectible.forSale(ethers.utils.id(a));
           let owner;
+          let strength = 0;
+          let lifespan = 0;
           if (!forSale) {
+            strength = await readContracts.YourCollectible.tokenStrength(utils.id(a));
+            strength = await readContracts.YourCollectible.lifespan(utils.id(a));
             const tokenId = await readContracts.YourCollectible.uriToTokenId(ethers.utils.id(a));
             owner = await readContracts.YourCollectible.ownerOf(tokenId);
           }
-          assetUpdate.push({ id: a, ...assets[a], forSale, owner });
+          assetUpdate.push({ id: a, ...assets[a], forSale, owner, strength: strength, lifespan: lifespan });
         } catch (e) {
           console.log(e);
         }
@@ -588,8 +595,34 @@ function App(props) {
             blockExplorer={blockExplorer}
             minimized
           />
+          <div>
+            str: {loadedAssets[a].strength},
+            lif: {loadedAssets[a].lifespan}
+          </div>
         </div>,
       );
+      cardActions.push(
+        <div>
+          <Button onClick={() => {
+            console.log(loadedAssets[a].strength);
+            // tx(writeContracts.YourCollectible.trainPet(loadedAssets[a].id,{gasPrice:gasPrice}))
+          }}
+        >
+          Train
+          </Button>
+          </div>
+      )
+      cardActions.push(
+        <div>
+          <Button onClick={() => {
+            console.log(loadedAssets[a].lifespan);
+            // tx(writeContracts.YourCollectible.restPet(loadedAssets[a].id,{gasPrice:gasPrice}))
+          }}
+        >
+          Rest
+          </Button>
+          </div>
+      )
     }
 
     galleryList.push(
@@ -722,6 +755,10 @@ function App(props) {
                           <img src={item.image} style={{ maxWidth: 150 }} alt="" />
                         </div>
                         <div>{item.description}</div>
+                        <div>
+                          strength: {item.strength},
+                          lifespan: {item.lifespan}
+                        </div>
                       </Card>
 
                       <div>
