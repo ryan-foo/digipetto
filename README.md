@@ -1,5 +1,12 @@
 # 🏗 scaffold-eth - 🎫 Buyer Mints NFT
 
+## digipetto update
+
+Updated Alchemy / Infura credentials so it builds
+
+In process:
+Partially adding new contract with Chainlink VRF, adding lifespan + strength mechanics to the NFT
+
 > (Counterfactual NFT minting example...)
 
 Deployer pays around (0.283719 ETH ~$500 at todays gas and price) for the initial contract but then NFTs are only minted once a buyer wants them. (The buyer of the NFT pays the gas to mint. ~$55)
