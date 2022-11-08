@@ -1,8 +1,10 @@
-# 🏗 scaffold-eth - 🎫 Buyer Mints NFT
-
 ## digipetto update
 
-Updated Alchemy / Infura credentials so it builds
+Goal of digipetto is to create a template for free-to-start blockchain games. The aim is to have on-chain expiry (and potentially growth) of NFTs. In this case, the NFTs are digital pets. Randomness upon pet generation The goal for digipetto scoped within the hackathon was to integrate Polygon ID / Worldcoin for sybil resistance. This would be done by guaranteeing them a top 'roll' in randomness upon minting the digipetto.
+
+We build off scaffold-eth's `buyer-mints-nft` branch.
+
+Main work: updated Alchemy / Infura credentials so it builds.
 
 In process:
 Partially adding new contract with Chainlink VRF, adding lifespan + strength mechanics to the NFT
